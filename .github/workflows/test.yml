@@ -7,7 +7,7 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Install node
-        uses: actions@setup-node@v5
+        uses: actions/setup-node@v5
         with:
           node-version: 24
       - name: Install Dependencies
