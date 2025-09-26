@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Install node
+      - name: Install NodeJS
         uses: actions/setup-node@v5
         with:
           node-version: 24
