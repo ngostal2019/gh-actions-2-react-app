@@ -1,0 +1,16 @@
+name: Test React Vite Project
+on: push
+jobs:
+  test-react:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Code
+        uses: actions/checkout@v5
+      - name: Install node
+        uses: actions@setup-node@v5
+        with:
+          node-version: 24
+      - name: Install Dependencies
+        run: nmp ci # Install all dependencies
+      - name: Run Tests
+        run: npm test
