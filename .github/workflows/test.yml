@@ -11,6 +11,6 @@ jobs:
         with:
           node-version: 24
       - name: Install Dependencies
-        run: nmp ci # Install all dependencies
+        run: npm ci # Install all dependencies
       - name: Run Tests
         run: npm test
