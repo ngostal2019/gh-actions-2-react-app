@@ -1,5 +1,5 @@
 name: Deploy React Vite Project
-on: push
+on: [push, workflow_dispatch]
 jobs:
   test-react:
     runs-on: ubuntu-latest
