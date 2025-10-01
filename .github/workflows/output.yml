@@ -4,5 +4,11 @@ jobs:
   output-context:
     runs-on: ubuntu-latest
     steps:
-      - name: Display github Context
-        run: echo ${{ toJSON(github) }}
+#      - name: Display github Context
+#        run: echo '${{ toJSON(github) }}'
+      - name: Extract Committer username
+        run: echo '${{ github.head_commit.committer.username }}'
+      - name: Extract Committer email
+        run: echo '${{ github.head_commit.committer.email }}'
+      - name: Extract Commit ID
+        run: echo '${{ github.head_commit.id }}'
