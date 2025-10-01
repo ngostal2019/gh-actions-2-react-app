@@ -4,10 +4,10 @@ jobs:
   output-context:
     runs-on: ubuntu-latest
     steps:
-      - name: Display github Context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo 'GitHub Context -> $GITHUB_CONTEXT'
+#      - name: Display github Context
+#        env:
+#          GITHUB_CONTEXT: ${{ toJSON(github) }}
+#        run: echo 'GitHub Context -> $GITHUB_CONTEXT'
       - name: Extract Committer username
         run: echo "Committer Username -> ${{ github.event.head_commit.committer.username }}"
       - name: Extract Committer email
