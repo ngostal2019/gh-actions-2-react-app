@@ -9,6 +9,6 @@ jobs:
       - name: Extract Committer username
         run: echo `${{ github.head_commit.committer.username }}`
       - name: Extract Committer email
-        run: echo `${{ github.head_commit.committer.email) }}`
+        run: echo `${{ github.head_commit.committer.email }}`
       - name: Extract Commit ID
         run: echo `${{ github.head_commit.id }}`
