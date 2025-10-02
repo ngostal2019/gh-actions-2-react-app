@@ -1,9 +1,11 @@
 name: Display Output of Issues Event
-on: issues
+on:
+  issues:
+    types: [opened, edited]
 jobs:
   issue-event:
     runs-on: ubuntu-latest
     steps:
       - name: Output issues event
-        run: echo "${{ github.issues }}"
+        run: echo "${{ github.event.issue }}"
 
