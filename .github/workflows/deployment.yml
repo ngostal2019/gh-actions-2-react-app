@@ -50,6 +50,6 @@ jobs:
         with:
           name: react-dist-artifact
       - name: Verifying Downloaded Artifact Was Successful
-        run: ls -ltra
+        run: ls -ltra ../
       - name: Deploy To Cloud
         run: echo "Deploying... "
