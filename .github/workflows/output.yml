@@ -1,16 +1,16 @@
-name: GitHub Context
-on: push
-jobs:
-  output-context:
-    runs-on: ubuntu-latest
-    steps:
-#      - name: Display github Context
-#        env:
-#          GITHUB_CONTEXT: ${{ toJSON(github) }}
-#        run: echo 'GitHub Context -> $GITHUB_CONTEXT'
-      - name: Extract Committer username
-        run: echo "Committer Username -> ${{ github.event.head_commit.committer.username }}"
-      - name: Extract Committer email
-        run: echo "Committer email -> ${{ github.event.head_commit.committer.email }}"
-      - name: Extract Commit ID
-        run: echo "Commit ID -> ${{ github.event.head_commit.id }}"
+#name: GitHub Context
+#on: push
+#jobs:
+#  output-context:
+#    runs-on: ubuntu-latest
+#    steps:
+##      - name: Display github Context
+##        env:
+##          GITHUB_CONTEXT: ${{ toJSON(github) }}
+##        run: echo 'GitHub Context -> $GITHUB_CONTEXT'
+#      - name: Extract Committer username
+#        run: echo "Committer Username -> ${{ github.event.head_commit.committer.username }}"
+#      - name: Extract Committer email
+#        run: echo "Committer email -> ${{ github.event.head_commit.committer.email }}"
+#      - name: Extract Commit ID
+#        run: echo "Commit ID -> ${{ github.event.head_commit.id }}"

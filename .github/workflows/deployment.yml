@@ -1,5 +1,13 @@
 name: Lint and Deploy React Vite Project
-on: push
+on:
+  push:
+    branches:
+      - main
+      - hotfix/**
+      - feature/**
+  pull_request:
+    branches:
+      - main
 jobs:
   linter:
     runs-on: ubuntu-latest
