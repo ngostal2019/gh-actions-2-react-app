@@ -29,6 +29,8 @@ jobs:
   builder:
     needs: tester
     runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.publish.outputs.test-file }}
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
@@ -36,6 +38,9 @@ jobs:
         run: npm ci # Install all dependencies from the package-lock.json file
       - name: Build Website Dist Folder
         run: npm run build
+      - name: Publish JS Filename
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'test-file={}' >> $GITHUB_OUTPUT ';'
       - name: Generating Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -50,6 +55,8 @@ jobs:
         with:
           name: react-dist-artifact
       - name: Verifying Downloaded Artifact Was Successful
-        run: ls -ltra ../
+        run: ls -ltra
+      - name: Output Produced From The Builder Job
+        run: echo "${{ needs.builder.outputs.script-file }}"
       - name: Deploy To Cloud
         run: echo "Deploying... "
