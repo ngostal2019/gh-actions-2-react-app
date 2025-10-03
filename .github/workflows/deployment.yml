@@ -45,5 +45,11 @@ jobs:
     needs: builder
     runs-on: ubuntu-latest
     steps:
+      - name: Downloading Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: react-dist-artifact
+      - name: Verifying Downloaded Artifact Was Successful
+        run: ls -ltra
       - name: Deploy To Cloud
         run: echo "Deploying... "
