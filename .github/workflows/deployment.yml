@@ -83,7 +83,7 @@ jobs:
       - name: Deploy To Cloud
         run: echo "Deploying... "
   reporter:
-    needs: deploy
+    needs: deployer
     if: failure()
     runs-on: ubuntu-latest
     steps:
