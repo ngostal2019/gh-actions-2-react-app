@@ -82,3 +82,12 @@ jobs:
         run: echo "${{ needs.builder.outputs.script-file }}"
       - name: Deploy To Cloud
         run: echo "Deploying... "
+  reporter:
+    needs: deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mimicking report
+        run: |
+          echo "generating report"
+          echo "${{ toJSON(github) }}"
