@@ -10,17 +10,8 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Code
-        uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci # Install all dependencies from the package-lock.json file
+      - name: Pull Code, cache and install dependencies
+        uses: ./github/worklows/reusable-workflows.yml
       - name: Running Linter
         run: npm run lint
   tester:
