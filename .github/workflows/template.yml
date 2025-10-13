@@ -1,0 +1,24 @@
+name: Reusable Workflow For Downloading Artifacts
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        description: The name of the deployable artifact files
+        required: false
+        default: dist-artifact
+        type: string
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloading Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ inputs.artifact_name }}
+      - name: Verifying Downloaded Artifact Was Successful
+        run: |
+          ls -ltra
+          pwd
+          whoami
+      - name: Deploy To Cloud
+        run: echo "Deploying... "

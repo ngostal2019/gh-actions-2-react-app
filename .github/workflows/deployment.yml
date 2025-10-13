@@ -55,18 +55,11 @@ jobs:
           path: dist
   deployer:
     needs: builder
-    runs-on: ubuntu-latest
-    steps:
-      - name: Downloading Artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: react-dist-artifact
-      - name: Verifying Downloaded Artifact Was Successful
-        run: ls -ltra
-      - name: Output Produced From The Builder Job
-        run: echo "${{ needs.builder.outputs.script-file }}"
-      - name: Deploy To Cloud
-        run: echo "Deploying... "
+    uses: ./.github/workflows/template.yml
+    with:
+      artifact_name: react-dist-artifact
+#      - name: Output Produced From The Builder Job
+#        run: echo "${{ needs.builder.outputs.script-file }}"
   reporter:
     needs: [linter, deployer]
     if: failure()
