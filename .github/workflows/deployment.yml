@@ -22,7 +22,6 @@ jobs:
       - name: Running Linter
         run: npm run lint
   tester:
-    needs: linter
     runs-on: ubuntu-latest
     steps:
       - name: Pull Code
@@ -83,7 +82,7 @@ jobs:
       - name: Deploy To Cloud
         run: echo "Deploying... "
   reporter:
-    needs: deployer
+    needs: [linter, deployer]
     if: failure()
     runs-on: ubuntu-latest
     steps:
