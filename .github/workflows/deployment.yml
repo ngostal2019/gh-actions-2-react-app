@@ -13,11 +13,13 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Caching Dependencies Installation
+        id: cache
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci # Install all dependencies from the package-lock.json file
       - name: Running Linter
         run: npm run lint
@@ -27,11 +29,13 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Caching Dependencies Installation
+        id: cache
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci # Install all dependencies from the package-lock.json file
       - name: Run Tests
         id: run_tests
@@ -51,11 +55,13 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Caching Dependencies Installation
+        id: cache
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci # Install all dependencies from the package-lock.json file
       - name: Build Website Dist Folder
         run: npm run build
