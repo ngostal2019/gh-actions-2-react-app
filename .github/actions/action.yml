@@ -12,3 +12,4 @@ runs:
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci # Install all dependencies from the package-lock.json file
+      shell: bash
