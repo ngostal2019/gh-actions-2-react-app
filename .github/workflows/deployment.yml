@@ -13,7 +13,7 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Cache and Install dependencies
-        uses: ./github/worklows/actions/action.yml
+        uses: ./github/actions/action.yml
       - name: Running Linter
         run: npm run lint
   tester:
