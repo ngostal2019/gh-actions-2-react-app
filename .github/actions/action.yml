@@ -1,5 +1,5 @@
 name: "Reusable Workflow"
-description: "An action with log sections"
+description: "An action To cache and Install Dependencies"
 runs:
   using: "composite"
   steps:
