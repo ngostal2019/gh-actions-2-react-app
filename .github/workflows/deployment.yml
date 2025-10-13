@@ -21,15 +21,8 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-#        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci # Install all dependencies from the package-lock.json file
+      - name: Cache and Install dependencies
+        uses: ./.github/actions
       - name: Run Tests
         continue-on-error: true
         id: run_tests
@@ -48,15 +41,8 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci # Install all dependencies from the package-lock.json file
+      - name: Cache and Install dependencies
+        uses: ./.github/actions
       - name: Build Website Dist Folder
         run: npm run build
       - name: Publish JS Filename
