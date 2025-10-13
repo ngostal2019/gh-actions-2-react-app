@@ -3,8 +3,6 @@ description: "An action with log sections"
 runs:
   using: "composite"
   steps:
-    - name: Pull Code
-      uses: actions/checkout@v5
     - name: Caching Dependencies Installation
       id: cache
       uses: actions/cache@v4

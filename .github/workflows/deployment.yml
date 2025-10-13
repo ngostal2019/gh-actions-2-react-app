@@ -10,7 +10,9 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Code, cache and install dependencies
+      - name: Pull Code
+        uses: actions/checkout@v5
+      - name: Cache and Install dependencies
         uses: ./github/worklows/actions/action.yml
       - name: Running Linter
         run: npm run lint
