@@ -1,0 +1,34 @@
+name: Reusable Workflow For Downloading Artifacts
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        description: "The name of the deployable artifact files"
+        required: false
+        default: dist-artifact
+        type: string
+    outputs:
+      print-result:
+        description: "The output of the deployer job"
+        value: ${{ jobs.deployer.outputs.outcome }}
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    outputs:
+      outcome: ${{ steps.result.outputs.step-result }}
+    steps:
+      - name: Downloading Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ inputs.artifact_name }}
+      - name: Verifying Downloaded Artifact Was Successful
+        run: |
+          ls -ltra
+          pwd
+          whoami
+          cat /etc/os-release
+      - name: Deploy To Cloud
+        run: echo "Deploying... "
+      - name: Printing status
+        id: result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT

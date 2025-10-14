@@ -12,30 +12,33 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        uses: actions/cache@v4
+      - name: Cache and Install dependencies
+        id: cache-deps
+        uses: ./.github/actions
         with:
-          path: ~/.npm
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        run: npm ci # Install all dependencies from the package-lock.json file
+          enabled-caching: 'false'
+      - name: Was caching used?
+        run: |
+          echo 'Caching value on linter job was: ${{ steps.cache-deps.outputs.was-cache-used }}'
       - name: Running Linter
         run: npm run lint
   tester:
-    needs: linter
     runs-on: ubuntu-latest
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        run: npm ci # Install all dependencies from the package-lock.json file
+      - name: Cache and Install dependencies
+        uses: ./.github/actions
       - name: Run Tests
+        continue-on-error: true
+        id: run_tests
         run: npm test
+      - name: Generating Test Report Artifact
+#        if: failure() && steps.run_tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-artifact
+          path: test.json
   builder:
     needs: tester
     runs-on: ubuntu-latest
@@ -44,13 +47,8 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v5
-      - name: Caching Dependencies Installation
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        run: npm ci # Install all dependencies from the package-lock.json file
+      - name: Cache and Install dependencies
+        uses: ./.github/actions
       - name: Build Website Dist Folder
         run: npm run build
       - name: Publish JS Filename
@@ -63,15 +61,23 @@ jobs:
           path: dist
   deployer:
     needs: builder
+    uses: ./.github/workflows/template.yml
+    with:
+      artifact_name: react-dist-artifact
+#      - name: Output Produced From The Builder Job
+#        run: echo "${{ needs.builder.outputs.script-file }}"
+  print-deployer-result:
+    needs: deployer
     runs-on: ubuntu-latest
     steps:
-      - name: Downloading Artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: react-dist-artifact
-      - name: Verifying Downloaded Artifact Was Successful
-        run: ls -ltra
-      - name: Output Produced From The Builder Job
-        run: echo "${{ needs.builder.outputs.script-file }}"
-      - name: Deploy To Cloud
-        run: echo "Deploying... "
+      - name: Print Deployer Output
+        run: echo "${{ needs.deployer.outputs.print-result }}"
+  reporter:
+    needs: [linter, deployer]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mimicking report
+        run: |
+          echo "generating report"
+          echo "${{ toJSON(github) }}"
