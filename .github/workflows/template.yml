@@ -8,7 +8,7 @@ on:
         default: dist-artifact
         type: string
     outputs:
-      job-step-result:
+      result:
         description: The output of the deployer job
         value: ${{ jobs.deployer.outputs.outcome }}
 jobs:

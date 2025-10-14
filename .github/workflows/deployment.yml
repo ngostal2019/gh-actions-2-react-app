@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Deployer Output
-        run: echo "${{ needs.deployer.outputs.job-step-result }}"
+        run: echo "${{ needs.deployer.outputs.result }}"
   reporter:
     needs: [linter, deployer]
     if: failure()
