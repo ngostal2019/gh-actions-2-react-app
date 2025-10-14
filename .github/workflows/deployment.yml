@@ -13,9 +13,13 @@ jobs:
       - name: Pull Code
         uses: actions/checkout@v5
       - name: Cache and Install dependencies
+        id: cache-deps
         uses: ./.github/actions
         with:
           enabled-caching: 'false'
+      - name: Was caching used?
+        run: |
+          echo 'Caching value on linter job was: ${{ steps.cache-deps.outputs.was-cache-used }}'
       - name: Running Linter
         run: npm run lint
   tester:
@@ -68,13 +72,6 @@ jobs:
     steps:
       - name: Print Deployer Output
         run: echo "${{ needs.deployer.outputs.print-result }}"
-  cache-checker:
-    needs: linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Was caching used?
-        run: |
-          echo 'Caching value on linter job was: ${{ needs.linter.outputs.was-cache-used }}'
   reporter:
     needs: [linter, deployer]
     if: failure()
