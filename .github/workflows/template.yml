@@ -7,8 +7,14 @@ on:
         required: false
         default: dist-artifact
         type: string
+    outputs:
+      job-step-result:
+        description: The output of the deployer job
+        value: ${{ jobs.deployer.outputs.outcome }}
 jobs:
   deployer:
+    outputs:
+      outcome: ${{ steps.result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Downloading Artifact
@@ -22,3 +28,6 @@ jobs:
           whoami
       - name: Deploy To Cloud
         run: echo "Deploying... "
+      - name: Printing status
+        id: result
+        run: echo "step-result=success" >> GITHUB_OUTPUT

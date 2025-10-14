@@ -60,6 +60,12 @@ jobs:
       artifact_name: react-dist-artifact
 #      - name: Output Produced From The Builder Job
 #        run: echo "${{ needs.builder.outputs.script-file }}"
+  print-deployer-result:
+    needs: deployer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Deployer Output
+        run: echo "${{ needs.deployer.outputs.job-step-result }}"
   reporter:
     needs: [linter, deployer]
     if: failure()
