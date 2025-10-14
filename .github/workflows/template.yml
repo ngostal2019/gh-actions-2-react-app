@@ -26,6 +26,7 @@ jobs:
           ls -ltra
           pwd
           whoami
+          cat /etc/os-release
       - name: Deploy To Cloud
         run: echo "Deploying... "
       - name: Printing status
