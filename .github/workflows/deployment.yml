@@ -15,7 +15,7 @@ jobs:
       - name: Cache and Install dependencies
         uses: ./.github/actions
         with:
-          enabled-caching: false
+          enabled-caching: 'false'
       - name: Running Linter
         run: npm run lint
   tester:
