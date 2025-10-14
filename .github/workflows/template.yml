@@ -3,13 +3,13 @@ on:
   workflow_call:
     inputs:
       artifact_name:
-        description: The name of the deployable artifact files
+        description: "The name of the deployable artifact files"
         required: false
         default: dist-artifact
         type: string
     outputs:
       result:
-        description: The output of the deployer job
+        description: "The output of the deployer job"
         value: ${{ jobs.deployer.outputs.outcome }}
 jobs:
   deployer:
