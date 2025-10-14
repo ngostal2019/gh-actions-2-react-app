@@ -13,9 +13,9 @@ on:
         value: ${{ jobs.deployer.outputs.outcome }}
 jobs:
   deployer:
+    runs-on: ubuntu-latest
     outputs:
       outcome: ${{ steps.result.outputs.step-result }}
-    runs-on: ubuntu-latest
     steps:
       - name: Downloading Artifact
         uses: actions/download-artifact@v5
