@@ -81,3 +81,8 @@ jobs:
         run: |
           echo "generating report"
           echo "${{ toJSON(github) }}"
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing custom github action js
+        uses: ./.github/actions/deploy-s3-js
