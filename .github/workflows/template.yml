@@ -30,4 +30,4 @@ jobs:
         run: echo "Deploying... "
       - name: Printing status
         id: result
-        run: echo "step-result=success" >> GITHUB_OUTPUT
+        run: echo "step-result=echo 'success'" >> GITHUB_OUTPUT
