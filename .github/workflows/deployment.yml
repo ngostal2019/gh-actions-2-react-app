@@ -84,5 +84,7 @@ jobs:
   info:
     runs-on: ubuntu-latest
     steps:
+      - name: Pull Code
+        uses: actions/checkout@v5
       - name: Testing custom github action js
         uses: ./.github/actions/deploy-s3-js
