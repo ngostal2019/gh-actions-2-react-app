@@ -68,6 +68,13 @@ jobs:
     steps:
       - name: Print Deployer Output
         run: echo "${{ needs.deployer.outputs.print-result }}"
+  cache-checker:
+    needs: linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Was caching used?
+        run: |
+          echo 'Caching value on linter job was: ${{ needs.linter.outputs.was-cache-used }}'
   reporter:
     needs: [linter, deployer]
     if: failure()

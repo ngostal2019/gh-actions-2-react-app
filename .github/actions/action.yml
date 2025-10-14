@@ -5,6 +5,10 @@ inputs:
     description: 'Whether to cache dependencies or not'
     required: false
     default: 'true'
+outputs:
+  was-cache-used:
+    description: 'Check whether or not the cached input was used'
+    value: ${{ steps.install.outputs.cached-used }}
 runs:
   using: 'composite'
   steps:
@@ -16,6 +20,9 @@ runs:
         path: node_modules
         key: deps-node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
     - name: Install Dependencies
+      id: install
       if: steps.cache.outputs.cache-hit != 'true' || inputs.enabled-caching != 'true'
-      run: npm ci # Install all dependencies from the package-lock.json file
+      run: |
+        npm ci # Install all dependencies from the package-lock.json file
+        echo "cached-used=${{ inputs.caching-enabled }}" >> $GITHUB_OUTPUT
       shell: bash
