@@ -35,7 +35,7 @@ jobs:
         with:
           bucket-name: github-actions-custom-js
 #          bucket-region: us-east-2
-          dist-folder: dist
+          dist-folder: ./dist
       - name: Printing status
         id: result
         run: echo "step-result=success" >> $GITHUB_OUTPUT
