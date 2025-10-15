@@ -11,9 +11,13 @@ on:
       print-result:
         description: "The output of the deployer job"
         value: ${{ jobs.deployer.outputs.outcome }}
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 jobs:
   deployer:
-    environment: production
     runs-on: ubuntu-latest
     outputs:
       outcome: ${{ steps.result.outputs.step-result }}
@@ -24,9 +28,10 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.artifact_name }}
+          path: ./dist
       - name: Verifying Downloaded Artifact Was Successful
         run: |
-          ls -ltra
+          ls -ltr
       - name: Deploy To Cloud
         uses: ./.github/actions/deploy-s3-js
         env:
