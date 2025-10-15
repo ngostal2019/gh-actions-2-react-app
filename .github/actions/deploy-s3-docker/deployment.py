@@ -4,7 +4,7 @@ from botocore.config import Config as cfg
 
 def run():
     bucket_name = os.environ['INPUT_BUCKET-NAME']
-    bucket_region = os.environ['INPUT_BUCKET-NAME']
+    bucket_region = os.environ['INPUT_BUCKET-REGION']
     dist_older = os.environ['INPUT_DIST-FOLDER']
 
     configuration = cfg(region_name=bucket_region)
