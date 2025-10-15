@@ -15,5 +15,5 @@ outputs:
   website-url:
     description: 'The URL for AWS static website hosting'
 runs:
-  main: 'Dockerfile'
   using: 'docker'
+  image: 'Dockerfile'
