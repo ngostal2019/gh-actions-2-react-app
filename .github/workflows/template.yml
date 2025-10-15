@@ -33,7 +33,9 @@ jobs:
         run: |
           ls -ltr
       - name: Deploy To Cloud
-        uses: ./.github/actions/deploy-s3-js
+        id: deploy
+        uses: ./.github/actions/deploy-s3-docker
+#        uses: ./.github/actions/deploy-s3-js
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -41,6 +43,9 @@ jobs:
           bucket-name: github-actions-custom-js
 #          bucket-region: us-east-2
           dist-folder: ./dist
+      - name: Access To Website
+        run: |
+          echo "Visit your deployment at: ${{ steps.deploy.outputs.website-url }}"
       - name: Printing status
         id: result
         run: echo "step-result=success" >> $GITHUB_OUTPUT
