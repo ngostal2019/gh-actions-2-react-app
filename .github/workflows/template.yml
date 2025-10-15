@@ -18,6 +18,8 @@ jobs:
     outputs:
       outcome: ${{ steps.result.outputs.step-result }}
     steps:
+      - name: Pull Code
+        uses: actions/checkout@v5
       - name: Downloading Artifact
         uses: actions/download-artifact@v5
         with:
