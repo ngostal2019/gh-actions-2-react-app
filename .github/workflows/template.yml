@@ -11,24 +11,36 @@ on:
       print-result:
         description: "The output of the deployer job"
         value: ${{ jobs.deployer.outputs.outcome }}
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 jobs:
   deployer:
     runs-on: ubuntu-latest
     outputs:
       outcome: ${{ steps.result.outputs.step-result }}
     steps:
+      - name: Pull Code
+        uses: actions/checkout@v5
       - name: Downloading Artifact
         uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.artifact_name }}
+          path: ./dist
       - name: Verifying Downloaded Artifact Was Successful
         run: |
-          ls -ltra
-          pwd
-          whoami
-          cat /etc/os-release
+          ls -ltr
       - name: Deploy To Cloud
-        run: echo "Deploying... "
+        uses: ./.github/actions/deploy-s3-js
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        with:
+          bucket-name: github-actions-custom-js
+#          bucket-region: us-east-2
+          dist-folder: ./dist
       - name: Printing status
         id: result
         run: echo "step-result=success" >> $GITHUB_OUTPUT

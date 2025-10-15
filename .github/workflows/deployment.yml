@@ -58,14 +58,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: react-dist-artifact
-          path: dist
+          path: ./dist
   deployer:
     needs: builder
     uses: ./.github/workflows/template.yml
     with:
       artifact_name: react-dist-artifact
-#      - name: Output Produced From The Builder Job
-#        run: echo "${{ needs.builder.outputs.script-file }}"
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   print-deployer-result:
     needs: deployer
     runs-on: ubuntu-latest

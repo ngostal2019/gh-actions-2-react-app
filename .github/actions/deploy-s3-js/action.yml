@@ -1,0 +1,16 @@
+name: 'Deploy to AWS S3'
+description: 'Deploy Static Website to AWS S3.'
+inputs:
+  bucket-name:
+    description: 'The S3 bucket name to upload to.'
+    required: true
+  bucket-region:
+    description: 'The S3 bucket region to upload to.'
+    required: false
+    default: 'us-east-1'
+  dist-folder:
+    description: 'The local folder containing static website file to upload to S3.'
+    required: true
+runs:
+  main: 'main.js'
+  using: 'node24'
