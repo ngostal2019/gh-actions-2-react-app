@@ -67,6 +67,13 @@ jobs:
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  printInfo:
+    needs: deployer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Access To Website
+        run: |
+          echo "Visit your deployment at: ${{ needs.deployer.outputs.website-url }}"
   print-deployer-result:
     needs: deployer
     runs-on: ubuntu-latest

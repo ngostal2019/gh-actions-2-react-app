@@ -11,6 +11,9 @@ inputs:
   dist-folder:
     description: 'The local folder containing static website file to upload to S3.'
     required: true
+outputs:
+  website-url:
+    description: 'The URL for AWS static website hosting'
 runs:
   main: 'main.js'
   using: 'node24'
