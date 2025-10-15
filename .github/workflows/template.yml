@@ -13,6 +13,7 @@ on:
         value: ${{ jobs.deployer.outputs.outcome }}
 jobs:
   deployer:
+    environment: production
     runs-on: ubuntu-latest
     outputs:
       outcome: ${{ steps.result.outputs.step-result }}
@@ -24,11 +25,15 @@ jobs:
       - name: Verifying Downloaded Artifact Was Successful
         run: |
           ls -ltra
-          pwd
-          whoami
-          cat /etc/os-release
       - name: Deploy To Cloud
-        run: echo "Deploying... "
+        uses: ./.github/actions/deploy-s3-js
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        with:
+          bucket-name: github-actions-custom-js
+#          bucket-region: us-east-2
+          dist-folder: dist
       - name: Printing status
         id: result
         run: echo "step-result=success" >> $GITHUB_OUTPUT
